@@ -4,6 +4,9 @@ class CalcController{
 
         //Underline define um atributo como privado
 
+        this._lastOperator ='';
+        this._lastNumber = '';
+
         this._operation =[];
 
         this._locale = 'pt-BR';
@@ -63,18 +66,31 @@ class CalcController{
         this._operation[this._operation.length-1] = value;
     }
 
-    setLastNumberToDisplay(value){
+    getLastItem(isOperator = true){
 
-        let lastNumber;
+        let lastItem;
 
         for(let i = this._operation.length-1; i >=0; i--){
-            if(!this.isOperator(this._operation[i])){
-                lastNumber = this._operation[i];
-                break;
-            }
+
+            if(this.isOperator(this._operation[i]) == isOperator){
+                    lastItem = this._operation[i];
+                    break;  
+            }           
         }
 
+        if(!lastItem){
+            lastItem = (isOperator) ? this._lastOperator : this._lastNumber;
+        }
+        return lastItem;
+
+    }
+
+    setLastNumberToDisplay(value){
+
+        let lastNumber = this.getLastItem(false);
+       
         if(!lastNumber) lastNumber = 0;
+
         this.displayCalc = lastNumber;
     }
 
@@ -92,15 +108,38 @@ class CalcController{
         }
         
     }
+    getResult(){
+
+       // console.log('getresult', this._operation);
+        return eval(this._operation.join(""));
+    }
     calc(){
 
-        let last = "";
+        let last = '';
+        this._lastOperator = this.getLastItem();
+
+        if(this._operation.length <3){
+
+            let firsItem = this._operation[0];
+            this._operation = [firsItem,this._lastOperator,this._lastNumber];
+        }
 
         if(this._operation.length >3){
+            
             last = this._operation.pop();
+            this._lastNumber = this.getResult();
+
         }
+        else if(this._operation.length == 3){
+           
+            this._lastNumber = this.getLastItem(false);
+
+        }
+
+       // console.log('_lastOperator', this._lastOperator);
+       // console.log('_lastNumber', this._lastNumber);
         
-        let result = eval(this._operation.join(""));
+        let result = this.getResult()
 
         if(last =='%'){
             result /= 100;
