@@ -9,11 +9,15 @@ function compra(valor,quantidade){
 
     let valorTotal = valor * quantidade;
     
-    if(saldo >= valor){
-        saldo -= valorTotal;       
+    if(saldo >= valor && estoque >= quantidade){
+        saldo -= valorTotal;     
+        estoque -= quantidade; 
+        return '$'+String(valorTotal)+',00'; 
+    }else if(saldo < valor){
+        return alert('Saldo Insuficiente');
+    }else{
+        return alert('Fora de Estoque');
     }
-    return '$'+String(valorTotal)+',00';
- 
 }
 
 valorUnitario = prompt('Informe o Valor do Produto:');
@@ -21,6 +25,7 @@ quantidade = prompt('Informe a quantidade de itens');
 
 console.log(compra(valorUnitario,quantidade));
 console.log('Saldo',saldo);
+console.log('Estoque', estoque);
 
 
 
