@@ -16,24 +16,29 @@ class UserController{
 
             let values = this.getValues();
 
-            values.photo = ";"
+            this.getPhoto().then(
+                
+                (content)=>{
 
-            this.getPhoto((content)=>{
+                    values.photo = content;
 
-                values.photo = content;
+                    this.addLine(values);
+                }, 
+                (e)=>{
+                    console.log(e);
 
-                this.addLine(values);
+                }
+            );
 
-            });
-            
-           
-        
         });
     }
     //--------------FINAL ONSUBMIT-----------------<<
     //--------------INICIA GETPHOTO --------------->>
-    getPhoto(callback){
-        let fileReader = new FileReader();
+    getPhoto(){
+
+        return new Promise((resolve,reject)=>{
+
+            let fileReader = new FileReader();
 
         let elements = [...this.formEl.elements].filter(item=>{
 
@@ -46,10 +51,16 @@ class UserController{
         let file =elements[0].files[0];
 
         fileReader.onload = ()=>{
-            callback(fileReader.result);
+            resolve(fileReader.result);
         };
 
+        fileReader.onerror = (e)=>{
+            reject(e);
+        }
+
         fileReader.readAsDataURL(file);
+
+        });       
            
     }
     //--------------FINAL GETPHOTO-----------------<<
