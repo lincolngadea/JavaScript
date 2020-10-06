@@ -158,8 +158,8 @@ class UserController{
        
        tr.querySelector(".btn-edit").addEventListener("click", e=>{
 
-            console.log(JSON.parse(tr.dataset.user));
-
+        console.log(JSON.parse(tr.dataset.user));          
+      
             this.showPanelUpdate();
            
        });
