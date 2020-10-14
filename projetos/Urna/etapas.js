@@ -22,7 +22,7 @@ let etapas = [
                 fotos:[
                     {
                         url:'77222.jpg',
-                        legenda:'Vereado',
+                        legenda:'Vereador',
                         pequeno:false
                     }
                 ]
@@ -31,7 +31,7 @@ let etapas = [
     },
     {
         titulo:'PREFEITO',
-        numeros: 3,
+        numeros: 2,
         candidatos:[
             {
                 numero: '99',
