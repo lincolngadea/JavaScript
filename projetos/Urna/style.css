@@ -143,3 +143,11 @@ body{
     color: red;
     text-align: center;
 }
+
+.aviso--gigante{
+    font-size:50px;
+    color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+}
